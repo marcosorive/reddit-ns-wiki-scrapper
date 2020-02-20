@@ -23,11 +23,29 @@ def get_dev_pub(input):
     return dev, publisher
 
 def get_dates(input):
-    dates = input.text;
-    regular_date_pattern =  "(\w+ \d+, \d+ )(\(\w+\)|\(\w+, \w+\))"
-    season_year_pattern = "(\w+|\w+\/\w+) \d+)"
+    dates = input.text
+    result = dict()
+    '''
+    Date types:
+        January 3, 2019 (NA), December 27, 2018 (EU), September 6, 2018 (JP)
+        Spring 2019/Early 2019/April 2019
+        TBD
+    '''
+    one_date_pattern = r"(\w+ \d+, \d+)"
+    multiple_date_pattern =  r"(\w+ \d+, \d+ )(\(\w+\)|\(\w+, \w+\))"
+    season_year_pattern = r"(\w+) (\d+)"
+    if re.match(multiple_date_pattern,dates):
+        dates = re.findall(multiple_date_pattern,dates)
+        for regional_date in dates:
+            result[regional_date[1].strip("(").strip(")")] = regional_date[0].rstrip().lstrip()
+    elif re.match(one_date_pattern,dates):
+        result["ALL"] = re.findall(one_date_pattern,dates)[0]
+    elif re.match(season_year_pattern,dates):
+        result["ALL"] = re.findall(season_year_pattern,dates)[0][1]
+    else:
+        result["ALL"] = "TBD"
 
-    return dict()
+    return result
 
 def get_trailer_link(element):
     if element.find("a"):
@@ -59,7 +77,7 @@ def get_data_from_table_row(row):
 '''
 def iterate_table(table):
     all_games = list()
-    for child in released_table_body.children:
+    for child in table.children:
         if isinstance(child, bs4.element.Tag):
             all_games.append(get_data_from_table_row(child))
     return all_games
