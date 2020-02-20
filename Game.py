@@ -1,4 +1,4 @@
-class Game:    
+class Game:
 
     def __init__(self, name = None):
         self.name = ""
@@ -13,7 +13,7 @@ class Game:
             "Name: " + self.name + "\n" + 
             "Link: " + self.link + "\n" + 
             "Dev: " + self.dev +"\n" + 
-            "publisher: " + self.publisher + "\n" + 
-            "dates: " + str(self.dates) + "\n"
-            "tailer link: " + self.trailer_link + "\n"
+            "Publisher: " + self.publisher + "\n" + 
+            "Dates: " + str(self.dates) + "\n"
+            "Tailer link: " + self.trailer_link + "\n"
         )
