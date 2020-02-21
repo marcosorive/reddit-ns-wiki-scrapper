@@ -1,7 +1,7 @@
 import bs4
-from request_maker import get_text_body_from_url, get_test_file
-from Game import Game
 import re
+from Model.Game import Game
+from Utils import request_maker
 
 def get_name_link(element):
     anchor = element.find("a")
@@ -81,10 +81,3 @@ def iterate_table(table):
         if isinstance(child, bs4.element.Tag):
             all_games.append(get_data_from_table_row(child))
     return all_games
-
-
-html = get_test_file()
-#response = get_text_body_from_url("https://www.reddit.com/r/NintendoSwitch/wiki/games")
-soup = bs4.BeautifulSoup(html, 'html.parser', from_encoding="utf-8")
-released_table_body = soup.find("h2",id="wiki_released").findNext('table').findNext("tbody")
-iterate_table(released_table_body)
