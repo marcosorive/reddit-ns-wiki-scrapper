@@ -1,7 +1,7 @@
 class Game:
 
-    def __init__(self, name = None):
-        self.name = ""
+    def __init__(self, name = ""):
+        self.name = name
         self.link = ""
         self.dev = ""
         self.publisher = ""
